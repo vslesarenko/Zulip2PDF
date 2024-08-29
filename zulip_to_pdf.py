@@ -1,12 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 import hashlib
 import os
 import shutil
 import re
 from PIL import Image
-
 
 def hash_file(filepath):
     '''Just create hash for comparison'''
@@ -34,13 +34,19 @@ def merge_pngs_to_pdf(png_files, output_pdf):
         images[0].save(output_pdf, save_all=True, append_images=images[1:])
 
 
-scroll_pause_time = 3 #Time (sec) to wait after scrolling before screenshot
+scroll_pause_time = 1 #Time (sec) to wait after scrolling before screenshot
 request_pause_time = 2 #Time (sec) to wait after request of new channel
+login_pause_time = 15 #Time (sec) for log in process
 
-max_scroll_clicks=100 #Just a failsafe in case if autodetection for the file
-channel_list=["dm/187-Angelika-Gedsun", "stream/101-MetaLab.3AAuto3DPrinter"]
+max_scroll_clicks=1000 #Just a failsafe in case if autodetection fails for the file
 
-# Set up Firefox WebDriver
+channel_list_file="channel_list.txt"
+with open(channel_list_file, 'r') as file:
+    channel_list = [line.strip() for line in file]
+
+print ("Channels:" + str(channel_list))
+
+# Set up WebDriver
 driver = webdriver.Firefox()
 
 for key, channel in enumerate(channel_list):
@@ -50,9 +56,11 @@ for key, channel in enumerate(channel_list):
     channel_short_name=channel_short_name.replace("/", "-")
     channel_alternative_name=re.sub(r'["\/:*?"<>|]', '_', channel_alternative_name)
     if key==0:
-        print ("Waiting 15 seconds for log in! Don't forget to close all pop-ups (green) after log in! Also the first  should be scrolled all the way down")
-        time.sleep(15)
+        print ("Waiting 15 seconds for log in! Don't forget to close all pop-ups (green) after log in! "
+               "Also the first channel should be scrolled all the way down. Also maximize the window")
+        time.sleep(login_pause_time)
         print ("We are starting")
+
     print (f"Working with the channel {channel}")
     try:
         create_or_clean_folder(f"RAW/{channel_alternative_name}")
@@ -69,8 +77,11 @@ for key, channel in enumerate(channel_list):
 
         # Scroll down
         if screen_count==0:
-            main_div=driver.find_element("tag name", "body")
-        main_div.send_keys(Keys.PAGE_UP)
+            #main_div=driver.find_element("tag name", "body") #This is an alternative that might not work
+            main_div = driver.find_element("id", "message_feed_container")
+        actions = ActionChains(driver)
+        actions.move_to_element(main_div).send_keys(Keys.PAGE_UP).perform()
+        #main_div.send_keys(Keys.PAGE_UP)  #This is alternative that might not work
         time.sleep(scroll_pause_time)
 
         # Check if reach the top
@@ -86,7 +97,7 @@ for key, channel in enumerate(channel_list):
     fname_list=sorted(fname_list, reverse=True)
     output_pdf = f"RAW/{channel_alternative_name}.pdf"
     merge_pngs_to_pdf(fname_list, output_pdf)
-    print(f"PDF saved as RAW/{output_pdf}")
+    print(f"PDF saved as {output_pdf}")
 
 
 print ("DONE!")

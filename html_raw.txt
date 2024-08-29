@@ -1,0 +1,38 @@
+
+<li class=" zero-dm-unreads dm-list-item bottom_left_row" data-user-ids-string="6">
+    <div class="dm-box dm-user-status" data-user-ids-string="6" data-is-group="false">
+
+        <span class="conversation-partners-icon zulip-icon zulip-icon-bot" aria-hidden="true"></span>
+
+        <a href="#narrow/dm/6-Notification-Bot" class="conversation-partners">
+            <span class="conversation-partners-list">Notification Bot</span>
+                    </a>
+        <span class="unread_count zero_count">
+            0
+        </span>
+    </div>
+</li>
+
+
+
+#Streams
+
+</li><li class="narrow-filter" data-stream-id="132">
+    <div class="bottom_left_row">
+        <div class="subscription_block selectable_sidebar_block">
+
+            <span class="stream-privacy-original-color-132 stream-privacy filter-icon" style="color: #bd86e5">
+                <i class="zulip-icon zulip-icon-hashtag" aria-hidden="true"></i>
+            </span>
+
+            <a href="#narrow/stream/132-Everybody" title="Everybody" class="stream-name">Everybody</a>
+
+            <div class="stream-markers-and-controls">
+                <span class="unread_mention_info" style="display: none;"></span>
+                <span class="unread_count hide"></span>
+                <span class="masked_unread_count"></span>
+            </div>
+
+            <span class="sidebar-menu-icon stream-sidebar-menu-icon hidden-for-spectators"><i class="zulip-icon zulip-icon-more-vertical" aria-hidden="true"></i></span>
+        </div>
+    </div>
