@@ -3,7 +3,7 @@
 
 This is a set of simple scripts that allows you to import all direct messages (DMs) and channels from the Uni Freiburg Zulip server as PDF files. Note that no OCR is performed, so each page is a screenshot of the corresponding content. While the image quality may not be perfect, I currently do not have the time to look into improving it.
 
-### What does the `save_to_pdf.py` script do?
+### What does the `zulip_to_pdf.py` script do?
 
 This script uses the Selenium driver to open a Firefox browser (though Chrome should work as well, see the line `driver=webdriver.Firefox()`). You have 15 seconds to log in with your credentials, close the top green pop-ups about notifications, and maximize the window. After 15 seconds, the script will begin taking screenshots of the page, scrolling up, and repeating this process until it reaches the top of the channel (or until the number of screenshots reaches `max_scroll_clicks=1000` as a failsafe). The files are automatically saved in the `RAW` folder within a corresponding subfolder (note that each subfolder is cleaned before every run). Once a channel is processed, the script converts all PNGs into a PDF in the `RAW` folder. Please ensure all related PDFs are closed before running the script to avoid file access conflicts. The script will then move on to the next channel or DM and repeat the process.
 
