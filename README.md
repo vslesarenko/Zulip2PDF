@@ -40,6 +40,11 @@ Possibly quite a few! I haven't had the time to implement proper exception handl
 
 Just comment line merge_pngs_to_pdf(fname_list, output_pdf). PDF won't be generated, but you will still have all png files.
 
+### Are you guarantee that everything will be saved?
+
+Of course, NO! 
+
 ### What should I do if I find a bug or know how to improve the performance (e.g., by improving resolution)?
 
 Feel free to email me at viacheslav.slesarenko@livmats.uni-freiburg.de or reach out on Matrix.
+
